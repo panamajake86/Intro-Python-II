@@ -67,15 +67,31 @@ while True:
 
     if command == "1":
         print("You proceed north.")
+        if player.current_room.n_to is None:
+            print("The way is shut, it is kept by those who are dead. The way is shut.")
+        else:
+            player.current_room = player.current_room.n_to
 
     elif command == "2":
         print("You travel east.")
+        if player.current_room.e_to is None:
+            print("The way is shut, it is kept by those who are dead. The way is shut.")
+        else:
+            player.current_room = player.current_room.e_to
 
     elif command == "3":
         print("You move south.")
+        if player.current_room.s_to is None:
+            print("The way is shut, it is kept by those who are dead. The way is shut.")
+        else:
+            player.current_room = player.current_room.s_to
 
     elif command == "4":
         print("You journey west.")
+        if player.current_room.w_to is None:
+            print("The way is shut, it is kept by those who are dead. The way is shut.")
+        else:
+            player.current_room = player.current_room.w_to
 
     else:
         print("You cannot travel on that plane of existence!")
