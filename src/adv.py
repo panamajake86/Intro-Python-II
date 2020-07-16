@@ -55,7 +55,7 @@ player = Player("Eamon", room["outside"])
 
 while True:
     player.current_room
-    print("You are in ", player.current_room.name)
+    print(f"{player.name} is in the", player.current_room.name)
     print("\n", player.current_room.description)
     print("\n Where would you like to go?")
 
