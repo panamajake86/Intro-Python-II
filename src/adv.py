@@ -54,12 +54,11 @@ room['treasure'].s_to = room['narrow']
 player = Player("Eamon", room["outside"])
 
 while True:
-    player.current_room
     print(f"{player.name} is in the", player.current_room.name)
     print("\n", player.current_room.description)
     print("\n Where would you like to go?")
 
-    command = input("[1] North, [2] East, [3] South, [4] West, [9] Quit Game \n")
+    command = input("[1] North\t [2] East\t [3] South\t [4] West\t1 [9] Quit Game \n")
 
     if command == "9":
         print("You've done all you can do here. Go rest and resume your adventure at a later time.")
