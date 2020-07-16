@@ -51,3 +51,31 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+player = Player("Eamon", room["outside"])
+
+while True:
+    player.current_room
+    print("You are in ", player.current_room.name)
+    print("\n", player.current_room.description)
+    print("\n Where would you like to go?")
+
+    command = input("[1] North, [2] East, [3] South, [4] West, [9] Quit Game \n")
+
+    if command == "9":
+        print("You've done all you can do here. Go rest and resume your adventure at a later time.")
+        break
+
+    if command == "1":
+        print("You proceed north.")
+
+    elif command == "2":
+        print("You travel east.")
+
+    elif command == "3":
+        print("You move south.")
+
+    elif command == "4":
+        print("You journey west.")
+
+    else:
+        print("You cannot travel on that plane of existence!")
