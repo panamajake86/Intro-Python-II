@@ -8,7 +8,7 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons", items = {
                          "medallion":  Item("medallion", "heavy gold coin"),
-                         "sword":  Item("spear", "very powerful long weapon")
+                         "spear":  Item("spear", "very powerful long weapon")
                      }),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
@@ -25,9 +25,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
-#[Item("medallion", "heavy gold coin"), Item("spear", "very powerful long weapon")]
-
 
 # Link rooms together
 
@@ -62,17 +59,16 @@ player = Player("Eamon", room["outside"])
 while True:
     room_items = player.current_room.items
     player_items = player.items
-
     print(f"{player.name} is in the", player.current_room.name)
     print("\n", player.current_room.description)
     print("\n" + player.name + "'s inventory")
     if len(player_items) > 0:
         for i in player_items:
-            print(i)
+            print(player_items[i])
     print("\nItem's in " + player.current_room.name)
     if len(room_items) > 0:
         for i in room_items:
-            print(i)
+            print(room_items[i])
     print("\n What would you like to do?")
 
     command = input("[n] North, [e] East, [s] South, [w] West, [get/take (item)] Pick up Item, [drop (item)] Drop Item, [q] Quit Game\n").split(" ")
