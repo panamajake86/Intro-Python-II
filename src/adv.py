@@ -6,7 +6,10 @@ from item import Item
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", items = {
+                         "medallion":  Item("medallion", "heavy gold coin"),
+                         "sword":  Item("spear", "very powerful long weapon")
+                     }),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -22,6 +25,8 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
+
+#[Item("medallion", "heavy gold coin"), Item("spear", "very powerful long weapon")]
 
 
 # Link rooms together
@@ -55,47 +60,68 @@ room['treasure'].s_to = room['narrow']
 player = Player("Eamon", room["outside"])
 
 while True:
+    room_items = player.current_room.items
+    player_items = player.items
+
     print(f"{player.name} is in the", player.current_room.name)
     print("\n", player.current_room.description)
-    #if len(items) > 0:
-     #   for i in items:
-      #      print(i)
-    print(items)
-    print("\n Where would you like to go?")
+    print("\n" + player.name + "'s inventory")
+    if len(player_items) > 0:
+        for i in player_items:
+            print(i)
+    print("\nItem's in " + player.current_room.name)
+    if len(room_items) > 0:
+        for i in room_items:
+            print(i)
+    print("\n What would you like to do?")
 
-    command = input("[1] North\t [2] East\t [3] South\t [4] West\t1 [9] Quit Game \n")
+    command = input("[n] North, [e] East, [s] South, [w] West, [get/take (item)] Pick up Item, [drop (item)] Drop Item, [q] Quit Game\n").split(" ")
 
-    if command == "9":
-        print("You've done all you can do here. Go rest and resume your adventure at a later time.")
-        break
-
-    if command == "1":
-        print("You proceed north.")
-        if player.current_room.n_to is None:
-            print("The way is shut, it is kept by those who are dead. The way is shut.")
+    if len(command) > 1:
+        if command[0] == "get":
+            player_items[command[1]] = room_items[command[1]]
+            room_items.pop(command[1])
+        elif command[0] == "take":
+            player_items[command[1]] = room_items[command[1]]
+            room_items.pop(command[1])
+        elif command[0] ==  "drop":
+            room_items[command[1]] = player_items[command[1]]
+            player_items.pop(command[1])
         else:
-            player.current_room = player.current_room.n_to
-
-    elif command == "2":
-        print("You travel east.")
-        if player.current_room.e_to is None:
-            print("The way is shut, it is kept by those who are dead. The way is shut.")
-        else:
-            player.current_room = player.current_room.e_to
-
-    elif command == "3":
-        print("You move south.")
-        if player.current_room.s_to is None:
-            print("The way is shut, it is kept by those who are dead. The way is shut.")
-        else:
-            player.current_room = player.current_room.s_to
-
-    elif command == "4":
-        print("You journey west.")
-        if player.current_room.w_to is None:
-            print("The way is shut, it is kept by those who are dead. The way is shut.")
-        else:
-            player.current_room = player.current_room.w_to
+            print("Please take or drop an item.")
 
     else:
-        print("You cannot travel on that plane of existence!")
+        if command == "q":
+            print("You've done all you can do here. Go rest and resume your adventure at a later time.")
+            break
+
+        if command == "n":
+            print("You proceed north.")
+            if player.current_room.n_to is None:
+                print("The way is shut, it is kept by those who are dead. The way is shut.")
+            else:
+                player.current_room = player.current_room.n_to
+
+        elif command == "e":
+            print("You travel east.")
+            if player.current_room.e_to is None:
+                print("The way is shut, it is kept by those who are dead. The way is shut.")
+            else:
+                player.current_room = player.current_room.e_to
+
+        elif command == "s":
+            print("You move south.")
+            if player.current_room.s_to is None:
+                print("The way is shut, it is kept by those who are dead. The way is shut.")
+            else:
+                player.current_room = player.current_room.s_to
+
+        elif command == "w":
+            print("You journey west.")
+            if player.current_room.w_to is None:
+                print("The way is shut, it is kept by those who are dead. The way is shut.")
+            else:
+                player.current_room = player.current_room.w_to
+
+        else:
+            print("You cannot travel on that plane of existence!")
