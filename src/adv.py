@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -56,6 +57,10 @@ player = Player("Eamon", room["outside"])
 while True:
     print(f"{player.name} is in the", player.current_room.name)
     print("\n", player.current_room.description)
+    #if len(items) > 0:
+     #   for i in items:
+      #      print(i)
+    print(items)
     print("\n Where would you like to go?")
 
     command = input("[1] North\t [2] East\t [3] South\t [4] West\t1 [9] Quit Game \n")
