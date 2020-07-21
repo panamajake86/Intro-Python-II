@@ -5,3 +5,9 @@ class Item:
     
     def __str__(self):
         return self.name + ":\t" + self.description
+
+    def on_take(self):
+        print("You have picked up " + self.name)
+    
+    def on_drop(self):
+        print("You have dropped " + self.name)

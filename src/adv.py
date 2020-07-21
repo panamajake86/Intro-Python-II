@@ -61,63 +61,83 @@ while True:
     player_items = player.items
     print(f"{player.name} is in the", player.current_room.name)
     print("\n", player.current_room.description)
-    print("\n" + player.name + "'s inventory")
-    if len(player_items) > 0:
-        for i in player_items:
-            print(player_items[i])
     print("\nItem's in " + player.current_room.name)
     if len(room_items) > 0:
         for i in room_items:
             print(room_items[i])
     print("\n What would you like to do?")
 
-    command = input("[n] North, [e] East, [s] South, [w] West, [get/take (item)] Pick up Item, [drop (item)] Drop Item, [q] Quit Game\n").split(" ")
+    command = input("[n] North, [e] East, [s] South, [w] West, [get/take (item)] Pick up Item, [drop (item)] Drop Item, [i/inventory] Player Inventory, [q] Quit Game\n").split(" ")
 
     if len(command) > 1:
         if command[0] == "get":
-            player_items[command[1]] = room_items[command[1]]
-            room_items.pop(command[1])
+            if command[1] in room_items:
+                player_items[command[1]] = room_items[command[1]]
+                room_items.pop(command[1])
+                player_items[command[1]].on_take()
+            else:
+                print(command[1] + " doesn't exist.")
         elif command[0] == "take":
-            player_items[command[1]] = room_items[command[1]]
-            room_items.pop(command[1])
+            if command[1] in room_items:
+                player_items[command[1]] = room_items[command[1]]
+                room_items.pop(command[1])
+                player_items[command[1]].on_take()
+            else:
+                print(command[1] + " doesn't exist.")
         elif command[0] ==  "drop":
-            room_items[command[1]] = player_items[command[1]]
-            player_items.pop(command[1])
+            if command[1] in player_items:
+                room_items[command[1]] = player_items[command[1]]
+                player_items.pop(command[1])
+                room_items[command[1]].on_drop()
+            else:
+                print(command[1] + " doesn't exist.")
         else:
-            print("Please take or drop an item.")
-
-    else:
-        if command == "q":
+            print("Please pick up or drop item.")
+        
+    if len(command) == 1:
+        if command[0] == "q":
             print("You've done all you can do here. Go rest and resume your adventure at a later time.")
             break
 
-        if command == "n":
+        if command[0] == "n":
             print("You proceed north.")
             if player.current_room.n_to is None:
                 print("The way is shut, it is kept by those who are dead. The way is shut.")
             else:
                 player.current_room = player.current_room.n_to
 
-        elif command == "e":
+        elif command[0] == "e":
             print("You travel east.")
             if player.current_room.e_to is None:
                 print("The way is shut, it is kept by those who are dead. The way is shut.")
             else:
                 player.current_room = player.current_room.e_to
 
-        elif command == "s":
+        elif command[0] == "s":
             print("You move south.")
             if player.current_room.s_to is None:
                 print("The way is shut, it is kept by those who are dead. The way is shut.")
             else:
                 player.current_room = player.current_room.s_to
 
-        elif command == "w":
+        elif command[0] == "w":
             print("You journey west.")
             if player.current_room.w_to is None:
                 print("The way is shut, it is kept by those who are dead. The way is shut.")
             else:
                 player.current_room = player.current_room.w_to
+
+        elif command[0] == "i":
+            print(player.name + "'s inventory")
+            if len(player_items) > 0:
+                for i in player_items:
+                    print(player_items[i])
+
+        elif command[0] == "inventory":
+            print(player.name + "'s inventory")
+            if len(player_items) > 0:
+                for i in player_items:
+                    print(player_items[i])
 
         else:
             print("You cannot travel on that plane of existence!")
