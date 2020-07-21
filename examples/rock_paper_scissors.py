@@ -1,6 +1,6 @@
 #import module we need
 import random
-
+ 
 #file i/o functions for historical results
 def load_results():
     text_file = open("history.txt", "r")
